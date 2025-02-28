@@ -90,7 +90,7 @@ docker-compose exec api bin/cake migrations migrate
 Наполнение начальными данными  
 docker-compose exec api bin/cake currency_fetch
 
-Доступ к приложению
+## Доступ к приложению
 
 Фронтенд: http://localhost:3000  
 Бэкенд (API): http://localhost:8000
