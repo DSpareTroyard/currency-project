@@ -67,8 +67,8 @@ docker-compose exec api chmod -R 777 tmp
     'ExposeHeaders' => [],
     'MaxAge' => 300
 ]
-```
 // ...
+```
 ```json
 Измените Datasources
 'Datasources' => [
