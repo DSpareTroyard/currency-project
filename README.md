@@ -45,6 +45,7 @@ docker-compose exec api chmod -R 777 tmp
 
 #### Настройка app_local.php
 Добавьте в backend/config/app_local.php:
+```json
 'Cache' => [
     'redis' => [
         'className' => 'Cake\Cache\Engine\RedisEngine',
@@ -56,6 +57,8 @@ docker-compose exec api chmod -R 777 tmp
     ]
 ]
 // ...
+```
+```json
 'Cors' => [
     'AllowOrigin' => ['http://localhost:3000'],
     'AllowMethods' => ['GET'],
@@ -64,7 +67,9 @@ docker-compose exec api chmod -R 777 tmp
     'ExposeHeaders' => [],
     'MaxAge' => 300
 ]
+```
 // ...
+```json
 Измените Datasources
 'Datasources' => [
     'default' => [
@@ -76,6 +81,7 @@ docker-compose exec api chmod -R 777 tmp
     ],
 ]
 // ...
+```
 
 ####  Инициализация приложения
 Создание структуры БД
