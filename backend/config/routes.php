@@ -50,6 +50,7 @@ return function (RouteBuilder $routes): void {
      */
 
     $routes->scope('/', function (RouteBuilder $builder): void {
+        $builder->setExtensions(['json', 'xml']);
         /*
          * Here, we are connecting '/' (base path) to a controller called 'Pages',
          * its action called 'display', and we pass a param to select the view file
@@ -81,6 +82,7 @@ return function (RouteBuilder $routes): void {
             'controller' => 'Api',
             'action' => 'optionsHandler'
         ]);
+        
         $builder->fallbacks();
     });
 
@@ -96,7 +98,7 @@ return function (RouteBuilder $routes): void {
             'path' => 'rates',
             'only' => ['index']
         ]);
-        // $builder->connect('rates', ['controller' => 'Rates']);
+        $builder->get('/currencies/list', ['controller' => 'Currencies', 'action' => 'list']);
         $builder->fallbacks();
     });
 

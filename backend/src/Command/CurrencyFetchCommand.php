@@ -9,6 +9,7 @@ use Cake\Console\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\ORM\TableRegistry;
+use Cake\Cache\Cache;
 
 class CurrencyFetchCommand extends Command
 {
@@ -20,58 +21,38 @@ class CurrencyFetchCommand extends Command
         $ratesTable = TableRegistry::getTableLocator()->get('Rates');
         
         foreach ($xml->Valute as $valute) {
-            $value = (string)$valute->Value;
+            $code = (string)$valute->CharCode;
+            $currentValue = (float)str_replace(',', '.', (string)$valute->Value);
+            $nominal = (float)$valute->Nominal;
+            $currentRate = $currentValue / $nominal;
 
-            if (empty($value)) {
-                $io->warning("Empty rate for currency: " . (string)$valute->CharCode);
-                continue;
-            }
+            $currency = $currenciesTable->findOrCreate(
+                ['code' => $code],
+                function ($entity) use ($valute) {
+                    $entity->name = (string)$valute->Name;
+                }
+            );            
 
-            $rateValue = (float)str_replace(',', '.', $value);
+            $lastRate = $ratesTable->find()
+            ->where(['currency_id' => $currency->id])
+            ->order(['created' => 'DESC'])
+            ->first();
 
-            $currency = $currenciesTable->findOrCreate([
-                'code' => (string)$valute->CharCode
-            ], function ($entity) use ($valute) {
-                $entity->name = (string)$valute->Name;
-            });
-
-            $rateData = [
-                'currency_id' => $currency->id,
-                'rate' => $rateValue,
-                'date' => new Date('now'),
-            ];
-            
-            $rate = $ratesTable->findOrCreate([
-                'currency_id' => $currency->id,
-                'date' => $rateData['date']
-            ]);
-
-            $existingRate = $ratesTable->find()
-                ->where([
+            if (!$lastRate || abs($lastRate->original_value - $currentValue) > 0.01) {
+                $rateData = [
                     'currency_id' => $currency->id,
-                    'date' => $rateData['date']
-                ])
-                ->first();
-
-            if ($existingRate) {
-                $rate = $ratesTable->patchEntity($existingRate, ['rate' => $rateValue]);
-            } else {
+                    'original_value' => $currentValue,
+                    'nominal' => $nominal,
+                    'rate' => $currentRate,
+                    'date' => date('Y-m-d')
+                ];
+            
                 $rate = $ratesTable->newEntity($rateData);
+                $ratesTable->save($rate);
+                $io->info("Updated rate for {$code}");
+                Cache::delete('currency_rates_with_changes', 'redis');
+                $io->info('Cache invalidated');
             }
-            
-            $currentRate = str_replace(',', '.', (string)$valute->Value);
-            if (!$rate) {
-                $rate = $ratesTable->newEntity([
-                    'currency_id' => $currency->id,
-                    'date' => date('Y-m-d'),
-                    'rate' => $currentRate
-                ]);
-            } else {
-                $rate->rate = $currentRate;
-            }
-            
-            $ratesTable->patchEntity($rate, $rateData);
-            $ratesTable->save($rate);
         }
         $io->success('Currency rates updated');
     }

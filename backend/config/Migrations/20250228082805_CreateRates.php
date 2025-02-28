@@ -27,5 +27,12 @@ class CreateRates extends AbstractMigration
             ->addColumn('modified', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
             ->addForeignKey('currency_id', 'currencies', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->create();
+            
+        $table->addColumn('nominal', 'integer', ['default' => 1])
+            ->addColumn('original_value', 'decimal', [
+                'precision' => 10,
+                'scale' => 4
+            ])
+            ->update();
     }
 }

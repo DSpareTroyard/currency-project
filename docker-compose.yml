@@ -15,6 +15,12 @@ services:
       - DB_NAME=currency
       - REDIS_HOST=redis
       - COMPOSER_ALLOW_SUPERUSER=1
+  scheduler:
+    image: alpine:3.18
+    command: >
+      sh -c "echo '*/5 * * * * /usr/bin/wget -qO- http://api/currency_fetch' > /etc/crontabs/root && crond -f"
+    depends_on:
+      - api
 
   # База данных MySQL
   db:

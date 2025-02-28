@@ -1,11 +1,16 @@
 FROM php:8.1-apache
 
-# Установка системных зависимостей
+# Установка зависимостей
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
     libicu-dev \
+    libssl-dev \
+    git \
+    wget \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     && docker-php-ext-install pdo pdo_mysql zip intl
 
 # Установка Composer
