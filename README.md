@@ -16,7 +16,7 @@
 ## Установка и запуск
 
 ### 1. Клонирование репозитория
-git clone https://github.com/DSpareTroyard/currency-project.git
+git clone https://github.com/DSpareTroyard/currency-project.git  
 cd currency-widget
 
 ### 2. Настройка окружения
