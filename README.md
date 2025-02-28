@@ -32,18 +32,18 @@ REDIS_PORT=6379
 docker-compose up --build -d
 
 ### 4. Установка зависимостей
-# Установка PHP зависимостей
+#### Установка PHP зависимостей
 docker-compose exec api composer install
 
-### 5. Установка Node.js зависимостей
+#### Установка Node.js зависимостей
 В директории frontend выполните
 npm install
 
-### 6. Создание необходимых директорий
+#### Создание необходимых директорий
 docker-compose exec api mkdir -p tmp/logs
 docker-compose exec api chmod -R 777 tmp
 
-### 7. Настройка app_local.php
+#### Настройка app_local.php
 Добавьте в backend/config/app_local.php:
 'Cache' => [
     'redis' => [
@@ -77,7 +77,7 @@ docker-compose exec api chmod -R 777 tmp
 ]
 // ...
 
-### 8.  Инициализация приложения
+####  Инициализация приложения
 Создание структуры БД
 docker-compose exec api bin/cake migrations migrate
 
