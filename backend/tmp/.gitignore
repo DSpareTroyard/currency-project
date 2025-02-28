@@ -1,0 +1,4 @@
+/cache/*
+/sessions/*
+/tests/*
+/debug_kit.sqlite

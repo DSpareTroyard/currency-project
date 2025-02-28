@@ -3,10 +3,6 @@
 /config/app_local.php
 /config/.env
 /logs/*
-/tmp/cache/*
-/tmp/sessions/*
-/tmp/tests/*
-/tmp/debug_kit.sqlite
 /vendor/*
 
 # OS generated files #
