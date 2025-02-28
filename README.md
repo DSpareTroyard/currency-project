@@ -92,7 +92,7 @@ docker-compose exec api bin/cake currency_fetch
 
 Доступ к приложению
 
-Фронтенд: http://localhost:3000
+Фронтенд: http://localhost:3000  
 Бэкенд (API): http://localhost:8000
 
 ## Примеры запросов к API
