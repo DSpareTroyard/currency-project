@@ -20,13 +20,13 @@ git clone https://github.com/DSpareTroyard/currency-project.git
 cd currency-widget
 
 ### 2. Настройка окружения
-Создайте файл .env в корне проекта:
-DB_HOST=db
-DB_USER=root
-DB_PASSWORD=secret
-DB_NAME=currency
-REDIS_HOST=redis
-REDIS_PORT=6379
+Создайте файл .env в корне проекта:  
+DB_HOST=db  
+DB_USER=root  
+DB_PASSWORD=secret  
+DB_NAME=currency  
+REDIS_HOST=redis  
+REDIS_PORT=6379  
 
 ### 3. Запуск контейнеров
 docker-compose up --build -d
@@ -39,11 +39,11 @@ docker-compose exec api composer install
 В директории frontend выполните
 npm install
 
-#### Создание необходимых директорий
-docker-compose exec api mkdir -p tmp/logs
+### 5. Создание необходимых директорий
+docker-compose exec api mkdir -p tmp/logs  
 docker-compose exec api chmod -R 777 tmp
 
-#### Настройка app_local.php
+### 6. Настройка app_local.php
 Добавьте в backend/config/app_local.php:
 ```json
 'Cache' => [
@@ -83,7 +83,7 @@ docker-compose exec api chmod -R 777 tmp
 // ...
 ```
 
-####  Инициализация приложения
+### 7. Инициализация приложения
 Создание структуры БД
 docker-compose exec api bin/cake migrations migrate
 
