@@ -3,7 +3,10 @@
 /config/app_local.php
 /config/.env
 /logs/*
-/tmp/*
+/tmp/cache/*
+/tmp/sessions/*
+/tmp/tests/*
+/tmp/debug_kit.sqlite
 /vendor/*
 
 # OS generated files #
@@ -14,7 +17,8 @@
 .Spotlight-V100
 .Trashes
 # Icon must end with two \r
-Icon
+Icon
+
 ehthumbs.db
 Thumbs.db
 .directory
