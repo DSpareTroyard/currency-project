@@ -84,10 +84,10 @@ docker-compose exec api chmod -R 777 tmp
 ```
 
 ### 7. Инициализация приложения
-Создание структуры БД
+Создание структуры БД  
 docker-compose exec api bin/cake migrations migrate
 
-Наполнение начальными данными
+Наполнение начальными данными  
 docker-compose exec api bin/cake currency_fetch
 
 Доступ к приложению
