@@ -69,8 +69,9 @@ docker-compose exec api chmod -R 777 tmp
 ]
 // ...
 ```
-```json
+
 Измените Datasources
+```json
 'Datasources' => [
     'default' => [
         'host' => 'db',
